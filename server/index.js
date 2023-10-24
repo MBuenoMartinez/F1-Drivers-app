@@ -5,7 +5,7 @@ const PORT = 3001;
 const getAllDrivers = require("./src/utils/getAllDrivers");
 
 conn
-  .sync({ force: true })
+  .sync({ force: false }) // ponemos el force en false para que cada vez que se reinicia el servidor no se cambien los ids de los drivers
   .then(() => {
     server.listen(PORT, async () => {
       await getAllDrivers();
