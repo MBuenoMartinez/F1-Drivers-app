@@ -10,7 +10,7 @@ conn
   .then(() => {
     server.listen(PORT, async () => {
       await getAllDrivers();
-      // await getAllTeams();
+      await getAllTeams();
       console.log(`Server listening on port ${PORT}`);
     });
   })

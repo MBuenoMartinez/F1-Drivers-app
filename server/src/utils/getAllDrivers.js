@@ -1,7 +1,7 @@
 const axios = require("axios");
 const { Driver } = require("../db");
 const URL_BASE = "http://localhost:5000/drivers";
-
+const defaultImage = "../../public/defaultImage.png";
 const getAllDrivers = async () => {
   try {
     const response = await axios.get(URL_BASE);
@@ -19,11 +19,14 @@ const getAllDrivers = async () => {
 
       if (!existingDriver) {
         // El conductor no existe en la base de datos, crea un nuevo registro
+        const imageToUse = driverData.image.url
+          ? driverData.image.url
+          : defaultImage;
         await Driver.create({
           name: driverData.name.forename,
           lastName: driverData.name.surname,
           description: driverData.description,
-          image: driverData.image.url,
+          image: imageToUse,
           nationality: driverData.nationality,
           dob: driverData.dob,
         });

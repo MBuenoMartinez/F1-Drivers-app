@@ -1,9 +1,9 @@
 const { Driver } = require("../db");
-
+const defaultImage = "../../public/defaultImage.png";
 const postDrivers = async (req, res) => {
   try {
     const { name, lastName, description, image, nationality, dob } = req.body;
-    if (!name || !lastName || description || image || !nationality || !dob) {
+    if (!name || !lastName || description || !image || !nationality || !dob) {
       res.status(400).send("Faltan Datos");
       return; // Salir de la función después de enviar la respuesta
     }
@@ -16,11 +16,12 @@ const postDrivers = async (req, res) => {
     });
 
     if (!findDriver) {
+      const imageToUse = image ? image : defaultImage;
       const newDriver = await Driver.create({
         name,
         lastName,
         description,
-        image,
+        image: imageToUse,
         nationality,
         dob,
       });
