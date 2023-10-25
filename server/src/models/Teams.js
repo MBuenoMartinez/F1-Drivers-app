@@ -5,13 +5,13 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define("Teams", {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       primaryKey: true,
-      autoIncrement: true,
+      defaultValue: DataTypes.UUIDV4,
     },
     name: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: true,
     },
   });
 };

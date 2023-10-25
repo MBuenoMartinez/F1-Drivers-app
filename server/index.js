@@ -3,12 +3,14 @@ const server = require("./src/server");
 const { conn } = require("./src/db.js");
 const PORT = 3001;
 const getAllDrivers = require("./src/utils/getAllDrivers");
+const getAllTeams = require("./src/utils/getAllTeams");
 
 conn
-  .sync({ force: true }) // ponemos el force en false para que cada vez que se reinicia el servidor no se cambien los ids de los drivers
+  .sync({ force: false }) // ponemos el force en false para que cada vez que se reinicia el servidor no se cambien los ids de los drivers
   .then(() => {
     server.listen(PORT, async () => {
       await getAllDrivers();
+      // await getAllTeams();
       console.log(`Server listening on port ${PORT}`);
     });
   })
