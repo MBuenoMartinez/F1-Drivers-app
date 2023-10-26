@@ -1,4 +1,6 @@
+const axios = require("axios");
 const { Teams } = require("../db");
+const URL_BASE = "http://localhost:5000/drivers";
 const getAllTeams = async (req, res) => {
   try {
     const response = await axios.get(URL_BASE);
@@ -26,7 +28,7 @@ const getAllTeams = async (req, res) => {
       });
     }
 
-    return res.status(200).json(allTeams);
+    return allTeams;
   } catch (error) {
     console.error("Error al crear equipos:", error);
   }
