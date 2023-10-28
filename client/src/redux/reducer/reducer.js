@@ -1,6 +1,11 @@
-import { GET_ALL_DRIVERS } from "../actions/type-actions";
+import {
+  GET_ALL_DRIVERS,
+  GET_DRIVER_DETAIL,
+  CLEAR_DRIVER_DETAIL,
+} from "../actions/type-actions";
 const initialState = {
   drivers: [],
+  driverDetail: {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -9,6 +14,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         drivers: action.payload,
+      };
+    case GET_DRIVER_DETAIL:
+      return {
+        ...state,
+        driverDetail: action.payload,
+      };
+    case CLEAR_DRIVER_DETAIL:
+      return {
+        ...state,
+        driverDetail: action.payload,
       };
 
     default:
