@@ -1,6 +1,8 @@
 const { Driver } = require("../db");
 const axios = require("axios");
 const URL_BASE = "http://localhost:5000/drivers";
+const defaultImage =
+  "https://i.pinimg.com/originals/be/32/fe/be32fe61944b433376718b5d2d42dfcb.jpg";
 const getDriversById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -12,7 +14,7 @@ const getDriversById = async (req, res) => {
         return res.status(200).json(driverDb);
       } else {
         return res
-          .status(400)
+          .status(404)
           .send("No se encontró un driver con el ID especificado");
       }
     }
@@ -27,7 +29,7 @@ const getDriversById = async (req, res) => {
         name: name.forename,
         lastName: name.surname,
         description,
-        image,
+        image: image.url ? image.url : defaultImage,
         nationality,
         dob,
         teams,
@@ -35,7 +37,7 @@ const getDriversById = async (req, res) => {
       return res.status(200).json(driverApi);
     }
     return res
-      .status(400)
+      .status(404)
       .send("No se encontró un driver con el ID especificado");
   } catch (error) {
     res.status(500).json({ error: error.message });
