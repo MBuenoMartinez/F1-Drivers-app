@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-const Card = ({ id, name, lastName, image, nationality }) => {
+const Card = ({ id, name, lastName, image, teams }) => {
   return (
     <div>
       <Link to={`/drivers/${id}`}>
@@ -7,7 +7,7 @@ const Card = ({ id, name, lastName, image, nationality }) => {
         <p>{lastName}</p>
       </Link>
       <img src={image} alt={lastName} />
-      <p>{nationality}</p>
+      <p>Escuderias: {teams}</p>
     </div>
   );
 };

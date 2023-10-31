@@ -1,10 +1,11 @@
 import Button from "../button/Button";
-
+import SearchBar from "../searchBar/SearchBar";
 const Nav = () => {
   return (
     <nav>
       <Button link={"/drivers"} text={"Home"} />
-      <Button link={"/drivers/createYourDriver"} text={"Create Driver"} />
+      <SearchBar />
+      <Button link={"/createDriver"} text={"Create Driver"} />
     </nav>
   );
 };
