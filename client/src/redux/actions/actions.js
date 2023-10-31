@@ -22,19 +22,21 @@ export const getAllDrivers = () => {
     }
   };
 };
+
 export const getDriversByName = (name) => {
-  return async (dispatch) => {
-    try {
-      const endPoint = "http://localhost:3001/drivers";
-      const { data } = await axios.get(endPoint, name);
+  try {
+    return async (dispatch) => {
+      const endPoint = `http://localhost:3001/drivers?name=${name}`;
+      const { data } = await axios.get(endPoint);
+
       return dispatch({
         type: GET_DRIVERS_BY_NAME,
         payload: data,
       });
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  };
+    };
+  } catch (error) {
+    throw Error(error.message);
+  }
 };
 
 export const getDriverDetail = (id) => {

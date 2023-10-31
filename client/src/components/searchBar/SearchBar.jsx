@@ -1,20 +1,34 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { getDriversByName } from "../../redux/actions/actions";
+import { useState } from "react";
 
-const SearchBar = () => {
-  const dispatch = useDispatch();
-  const [driverName, setDriverName] = useState("");
+const SearchBar = ({ onSearch }) => {
+  const [name, setName] = useState("");
+  const [searchTimeout, setSearchTimeout] = useState(null);
 
   const handleChange = (event) => {
-    const name = event.target.value;
-    setDriverName(name);
-    dispatch(getDriversByName(name));
+    const newName = event.target.value;
+    setName(newName);
+
+    // Cancelar la búsqueda anterior si el usuario sigue escribiendo
+    if (searchTimeout) {
+      clearTimeout(searchTimeout);
+    }
+
+    // Establecer un nuevo temporizador para la búsqueda después de 300 ms
+    setSearchTimeout(
+      setTimeout(() => {
+        onSearch(newName);
+      }, 300)
+    );
   };
 
   return (
     <div>
-      <input type="search" onChange={handleChange} value={driverName} />
+      <input
+        type="search"
+        onChange={handleChange}
+        value={name}
+        placeholder="Buscar por nombre..."
+      />
     </div>
   );
 };
