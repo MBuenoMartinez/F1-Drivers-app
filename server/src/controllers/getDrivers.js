@@ -26,7 +26,18 @@ const getDrivers = async (req, res) => {
       include: [{ model: Teams, through: { attributes: [] } }],
     });
 
-    const allDrivers = [...driverApi, ...driversDb];
+    const driversWithTeams = driversDb.map((driver) => ({
+      id: driver.id,
+      name: driver.name,
+      lastName: driver.lastName,
+      description: driver.description,
+      image: driver.image,
+      nationality: driver.nationality,
+      dob: driver.dob,
+      teams: driver.Teams.map((team) => team.name), // Mapear solo los nombres de los equipos
+    }));
+
+    const allDrivers = [...driverApi, ...driversWithTeams];
 
     if (name) {
       const filterByName = allDrivers.filter((driver) =>
