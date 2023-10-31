@@ -1,6 +1,5 @@
 const { Driver, Teams } = require("../db");
 const axios = require("axios");
-const { Op } = require("sequelize");
 const URL_BASE = "http://localhost:5000/drivers";
 const defaultImage =
   "https://i.pinimg.com/originals/be/32/fe/be32fe61944b433376718b5d2d42dfcb.jpg";
@@ -20,20 +19,13 @@ const getDrivers = async (req, res) => {
       image: driver.image.url ? driver.image.url : defaultImage,
       nationality: driver.nationality,
       dob: driver.dob,
+      teams: driver.teams,
     }));
 
     const driversDb = await Driver.findAll({
       include: [{ model: Teams, through: { attributes: [] } }],
     });
-    // {
-    // where: {
-    //   name: {
-    //     [Op.iLike]: `${name}%`,
-    //   },
-    // },
-    // }
-    // if (!driversDb)
-    //   res.status(404).send("No hay drivers cargados en la base de datos");
+
     const allDrivers = [...driverApi, ...driversDb];
 
     if (name) {
