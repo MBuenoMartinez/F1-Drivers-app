@@ -1,4 +1,4 @@
-const { Driver } = require("../db");
+const { Driver, Teams } = require("../db");
 const axios = require("axios");
 const URL_BASE = "http://localhost:5000/drivers";
 const defaultImage =
@@ -8,10 +8,20 @@ const getDriversById = async (req, res) => {
     const { id } = req.params;
 
     if (isNaN(id)) {
-      const driverDb = await Driver.findByPk(id);
+      const driverDb = await Driver.findByPk(id, { include: Teams });
 
-      if (driverDb.id) {
-        return res.status(200).json(driverDb);
+      if (driverDb) {
+        const driverWithTeams = {
+          id: driverDb.id,
+          name: driverDb.name,
+          lastName: driverDb.lastName,
+          description: driverDb.description,
+          image: driverDb.image,
+          nationality: driverDb.nationality,
+          dob: driverDb.dob,
+          teams: driverDb.Teams.map((team) => team.name),
+        };
+        return res.status(200).json(driverWithTeams);
       } else {
         return res
           .status(404)
