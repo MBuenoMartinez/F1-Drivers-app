@@ -7,7 +7,7 @@ const Card = ({ id, name, lastName, image, teams }) => {
         <p>{lastName}</p>
       </Link>
       <img src={image} alt={lastName} />
-      <p>Escuderias: {teams}</p>
+      <p>Teams: {teams}</p>
     </div>
   );
 };

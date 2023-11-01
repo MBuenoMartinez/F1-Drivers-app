@@ -4,6 +4,7 @@ import {
   GET_DRIVER_DETAIL,
   CLEAR_DRIVER_DETAIL,
   GET_ALL_TEAMS,
+  FILTER_DRIVERS,
 } from "../actions/type-actions";
 const initialState = {
   drivers: [],
@@ -39,6 +40,21 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         teams: action.payload,
+      };
+    case FILTER_DRIVERS:
+      let backUp = [...state.driversBackUp];
+      let driversFiltered;
+      // if (action.payload === "Teams")
+      if (action.payload === "AllDrivers") driversFiltered = backUp;
+
+      if (action.payload === "DriversFromApi")
+        driversFiltered = backUp.filter((driver) => !isNaN(driver.id));
+      if (action.payload === "DriversFromDB")
+        driversFiltered = backUp.filter((driver) => isNaN(driver.id));
+
+      return {
+        ...state,
+        drivers: driversFiltered,
       };
 
     default:

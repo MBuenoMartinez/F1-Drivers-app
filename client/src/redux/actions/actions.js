@@ -5,6 +5,7 @@ import {
   CLEAR_DRIVER_DETAIL,
   GET_ALL_TEAMS,
   CREATE_DRIVER,
+  FILTER_DRIVERS,
 } from "./type-actions";
 import axios from "axios";
 
@@ -87,4 +88,14 @@ export const createDriver = (newDriver) => {
       throw new Error(error.message);
     }
   };
+};
+export const filterDrivers = (value) => {
+  try {
+    return {
+      type: FILTER_DRIVERS,
+      payload: value,
+    };
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
