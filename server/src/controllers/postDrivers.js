@@ -36,8 +36,9 @@ const postDrivers = async (req, res) => {
 
       // busca en el array de teams en la db y compara con los ingresado en el form del front
 
-      //convertir en array teams, limpiar los espacios,
-      const teamsArray = teams.split(",").map((item) => item.trim());
+      //limpiar los espacios
+      const teamsArray = teams.map((team) => team.trim());
+      console.log(teamsArray);
       //
       const team = await Teams.findAll({
         where: {

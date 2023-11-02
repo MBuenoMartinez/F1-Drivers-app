@@ -19,7 +19,7 @@ const getDriversById = async (req, res) => {
           image: driverDb.image,
           nationality: driverDb.nationality,
           dob: driverDb.dob,
-          teams: driverDb.Teams.map((team) => team.name),
+          teams: driverDb.Teams.map((team) => team.name).join(", "),
         };
         return res.status(200).json(driverWithTeams);
       } else {

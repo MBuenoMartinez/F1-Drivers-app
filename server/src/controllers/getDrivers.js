@@ -34,7 +34,7 @@ const getDrivers = async (req, res) => {
       image: driver.image,
       nationality: driver.nationality,
       dob: driver.dob,
-      teams: driver.Teams.map((team) => team.name), // Mapear solo los nombres de los equipos
+      teams: driver.Teams.map((team) => team.name).join(", "), // Mapear solo los nombres de los equipos
     }));
 
     const allDrivers = [...driverApi, ...driversWithTeams];

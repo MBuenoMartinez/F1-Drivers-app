@@ -15,6 +15,7 @@ const getDrivers = async (req, res) => {
         .map((driver) => driver.teams)
         .join(",")
         .split(/,\s*/)
+        .map((team) => team.trim()) // Elimina espacios al inicio y al final
         .filter((team) => team.length > 0)
     );
     const allTeams = Array.from(uniqueTeams);
