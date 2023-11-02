@@ -13,12 +13,25 @@ const FormPage = () => {
     image: "",
     dob: "",
     description: "",
-    teams: "",
+    teams: [],
   });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setNewDriver({ ...newDriver, [name]: value });
+
+    if (name === "teams") {
+      const selectedOptions = Array.from(
+        event.target.selectedOptions,
+        (option) => option.value
+      );
+
+      setNewDriver({
+        ...newDriver,
+        [name]: [...newDriver.teams, ...selectedOptions],
+      });
+    } else {
+      setNewDriver({ ...newDriver, [name]: value });
+    }
   };
 
   const handleSubmit = () => {
@@ -88,14 +101,17 @@ const FormPage = () => {
         </div>
         <div>
           <label>Teams: </label>
-          <input
-            type="text"
-            name="teams"
-            value={newDriver.teams}
-            onChange={handleChange}
-          />
+          <select type="checkBoxe" onChange={handleChange} name="teams">
+            {teams
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map((team, index) => (
+                <option key={index} value={team.name}>
+                  {team.name}
+                </option>
+              ))}
+          </select>
         </div>
-
+        <p>Teams selected: {newDriver.teams.join(", ")}</p>
         <button type="submit">Create</button>
       </form>
     </div>

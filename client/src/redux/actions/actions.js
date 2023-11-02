@@ -6,6 +6,7 @@ import {
   GET_ALL_TEAMS,
   CREATE_DRIVER,
   FILTER_DRIVERS,
+  ORDER_DRIVERS,
 } from "./type-actions";
 import axios from "axios";
 
@@ -93,6 +94,16 @@ export const filterDrivers = (value) => {
   try {
     return {
       type: FILTER_DRIVERS,
+      payload: value,
+    };
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+export const orderDrivers = (value) => {
+  try {
+    return {
+      type: ORDER_DRIVERS,
       payload: value,
     };
   } catch (error) {
