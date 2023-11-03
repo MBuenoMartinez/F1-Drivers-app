@@ -1,0 +1,30 @@
+/* .conteiner {
+  background-image: url(../../../public/images/detailPagebackGround.jpeg);
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 50vw;
+}
+.img {
+  width: 200px;
+  height: 250px;
+}
+.items {
+  display: flex;
+  flex-direction: row;
+} */
+.conteiner {
+  background-image: url(/images/detailPagebackGround.jpeg);
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 50vw;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.img {
+  width: 200px; /* Ajusta el ancho de la imagen según tus preferencias */
+  margin-right: 20px; /* Espacio entre la imagen y el contenido a la derecha */
+}

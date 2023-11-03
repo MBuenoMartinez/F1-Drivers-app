@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import styles from "./SearchBar.module.css";
 const SearchBar = ({ onSearch }) => {
   const [driverName, setDriverName] = useState("");
 
@@ -12,6 +12,7 @@ const SearchBar = ({ onSearch }) => {
   return (
     <div>
       <input
+        className={styles.input}
         type="search"
         onChange={handleChange}
         value={driverName}

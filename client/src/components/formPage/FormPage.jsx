@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { getAllTeams } from "../../redux/actions/actions";
 import { createDriver } from "../../redux/actions/actions";
+import validations from "./validatiosn";
+import styles from "./FormPage.module.css";
 const FormPage = () => {
   const dispatch = useDispatch();
   const teams = useSelector((state) => state.teams);
-
+  const navigate = useNavigate();
   const [newDriver, setNewDriver] = useState({
     name: "",
     lastName: "",
@@ -15,6 +18,7 @@ const FormPage = () => {
     description: "",
     teams: [],
   });
+  const [errors, setErrors] = useState({});
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -34,16 +38,19 @@ const FormPage = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     dispatch(createDriver(newDriver));
     alert("Your driver has been created");
+    navigate("/drivers");
   };
+
   useEffect(() => {
     dispatch(getAllTeams());
   }, []);
 
   return (
-    <div>
+    <div className={styles.conteiner}>
       <h2>Create your Driver</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -112,7 +119,9 @@ const FormPage = () => {
           </select>
         </div>
         <p>Teams selected: {newDriver.teams.join(", ")}</p>
-        <button type="submit">Create</button>
+        <button type="submit" className={styles.button}>
+          Create
+        </button>
       </form>
     </div>
   );

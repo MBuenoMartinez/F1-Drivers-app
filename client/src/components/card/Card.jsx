@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
+import styles from "./Card.module.css";
 const Card = ({ id, name, lastName, image, teams }) => {
   return (
-    <div>
+    <div className={styles.card}>
       <Link to={`/drivers/${id}`}>
-        <p>{name}</p>
-        <p>{lastName}</p>
+        <h3>{name}</h3>
+        <h3>{lastName}</h3>
+        <img src={image} alt={lastName} className={styles.img} />
+        <h3>Teams:</h3>
+        <h3>{teams}</h3>
       </Link>
-      <img src={image} alt={lastName} />
-      <p>Teams: {teams}</p>
     </div>
   );
 };

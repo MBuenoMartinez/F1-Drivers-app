@@ -1,0 +1,13 @@
+.input {
+  border-width: 10px;
+  margin-right: 10px;
+  border-radius: 15px;
+  background-color: black;
+  cursor: pointer;
+  text-align: center;
+  height: 50px;
+  width: 400px;
+}
+.input:hover {
+  border-color: aliceblue;
+}

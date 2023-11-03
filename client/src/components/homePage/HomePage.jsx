@@ -8,6 +8,7 @@ import {
 } from "../../redux/actions/actions";
 
 import Card from "../card/Card";
+import styles from "./HomePage.module.css";
 
 const Home = () => {
   const drivers = useSelector((state) => state.drivers);
@@ -47,7 +48,7 @@ const Home = () => {
     dispatch(filterDrivers(value));
   };
   return (
-    <div>
+    <div className={styles.conteiner}>
       <div>
         <label>Order by:</label>
         <select onChange={handleOrder}>
@@ -81,7 +82,7 @@ const Home = () => {
             ))}
         </select>
       </div>
-      <div>
+      <div className={styles.cards}>
         {displayedDrivers.map((driver) => (
           <Card
             key={driver.id}

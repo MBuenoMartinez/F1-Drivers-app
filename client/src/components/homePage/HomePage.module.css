@@ -1,0 +1,14 @@
+.conteiner {
+  background-image: url(/images/homePagebackGround.jpeg);
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 108vw;
+}
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row; /* Cambia de "column" a "row" */
+  justify-content: center;
+  gap: 50px; /* Espacio entre las tarjetas */
+}
