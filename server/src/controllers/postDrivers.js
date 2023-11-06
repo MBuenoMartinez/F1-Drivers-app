@@ -6,15 +6,7 @@ const postDrivers = async (req, res) => {
   try {
     const { name, lastName, description, image, nationality, dob, teams } =
       req.body;
-    if (
-      !name ||
-      !lastName ||
-      description ||
-      image ||
-      !nationality ||
-      !dob ||
-      !teams
-    )
+    if (!name || !lastName || description || !nationality || !dob || !teams)
       res.status(400).send("Faltan Datos");
 
     const findDriver = await Driver.findOne({
