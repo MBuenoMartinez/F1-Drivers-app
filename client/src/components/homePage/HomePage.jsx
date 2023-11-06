@@ -28,11 +28,13 @@ const Home = () => {
   const handleOrder = (event) => {
     const { value } = event.target;
     dispatch(orderDrivers(value));
+    setCurrentPage(1);
   };
 
   const handleFilter = (event) => {
     const { value } = event.target;
     dispatch(filterDrivers(value));
+    setCurrentPage(1);
   };
 
   // Función para cambiar de página

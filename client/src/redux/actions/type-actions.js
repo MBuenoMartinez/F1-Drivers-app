@@ -6,3 +6,4 @@ export const GET_ALL_TEAMS = "GET_ALL_TEAMS";
 export const CREATE_DRIVER = "CREATE_DRIVER";
 export const FILTER_DRIVERS = "FILTER_DRIVERS";
 export const ORDER_DRIVERS = "ORDER_DRIVERS";
+export const DELETE_DRIVER_DB = "DELETE_DRIVER_DB";

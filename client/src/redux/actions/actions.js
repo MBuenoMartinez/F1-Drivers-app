@@ -5,6 +5,7 @@ import {
   CLEAR_DRIVER_DETAIL,
   GET_ALL_TEAMS,
   CREATE_DRIVER,
+  DELETE_DRIVER_DB,
   FILTER_DRIVERS,
   ORDER_DRIVERS,
 } from "./type-actions";
@@ -83,6 +84,20 @@ export const createDriver = (newDriver) => {
       const { data } = await axios.post(endPoint, newDriver);
       return dispatch({
         type: CREATE_DRIVER,
+        payload: data,
+      });
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+};
+export const deleteDriver = (id) => {
+  return async (dispatch) => {
+    try {
+      const endPoint = `http://localhost:3001/drivers/${id}`;
+      const { data } = await axios.delete(endPoint);
+      return dispatch({
+        type: DELETE_DRIVER_DB,
         payload: data,
       });
     } catch (error) {

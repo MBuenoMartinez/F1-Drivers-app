@@ -37,6 +37,15 @@ const FormPage = () => {
       setNewDriver({ ...newDriver, [name]: value });
     }
   };
+  const handleRemoveTeam = (teamToRemove) => {
+    const updatedTeams = newDriver.teams.filter(
+      (team) => team !== teamToRemove
+    );
+    setNewDriver({
+      ...newDriver,
+      teams: updatedTeams,
+    });
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -134,7 +143,18 @@ const FormPage = () => {
               ))}
           </select>
         </div>
-        <p>Teams selected: {newDriver.teams.join(", ")}</p>
+        <label>Teams selected: </label>
+        {newDriver.teams.map((team, index) => (
+          <div key={index}>
+            {team}
+            <button
+              onClick={() => handleRemoveTeam(team)}
+              className={styles.button2}
+            >
+              X
+            </button>
+          </div>
+        ))}
         {errors.teams !== "" && <p className={styles.errors}>{errors.teams}</p>}
         <button
           type="submit"
