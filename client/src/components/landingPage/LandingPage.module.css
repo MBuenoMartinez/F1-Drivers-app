@@ -1,7 +1,21 @@
-.conteiner {
+.container {
   background-image: url(/images/landingPageBackGround.png);
   background-size: cover;
   background-position: center;
   width: 100%;
   height: 44.7vw;
+  display: flex;
+  justify-content: first baseline;
+  flex-direction: column;
+}
+
+H1 {
+  margin-bottom: 10px;
+  padding: 50px;
+  color: aliceblue;
+}
+
+.button {
+  margin-left: auto;
+  margin-right: auto;
 }

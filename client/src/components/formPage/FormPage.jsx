@@ -47,11 +47,18 @@ const FormPage = () => {
 
   useEffect(() => {
     dispatch(getAllTeams());
-  }, []);
+    if (
+      newDriver.name === "" ||
+      newDriver.lastName === "" ||
+      newDriver.nationality === "" ||
+      newDriver.dob === ""
+    )
+      setErrors(validations(newDriver));
+  }, [newDriver]);
 
   return (
-    <div className={styles.conteiner}>
-      <h2>Create your Driver</h2>
+    <div className={styles.container}>
+      <h2 className={styles.h2}>Create your Driver</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Name: </label>
@@ -62,6 +69,7 @@ const FormPage = () => {
             onChange={handleChange}
           />
         </div>
+        {errors.name !== "" && <p className={styles.errors}>{errors.name}</p>}
         <div>
           <label>Lastname: </label>
           <input
@@ -71,6 +79,9 @@ const FormPage = () => {
             onChange={handleChange}
           />
         </div>
+        {errors.lastName !== "" && (
+          <p className={styles.errors}>{errors.lastName}</p>
+        )}
         <div>
           <label>Nationality: </label>
           <input
@@ -80,6 +91,9 @@ const FormPage = () => {
             onChange={handleChange}
           />
         </div>
+        {errors.nationality !== "" && (
+          <p className={styles.errors}>{errors.nationality}</p>
+        )}
         <div>
           <label>Image: </label>
           <input
@@ -89,6 +103,7 @@ const FormPage = () => {
             onChange={handleChange}
           />
         </div>
+
         <div>
           <label>Day of Birth: </label>
           <input
@@ -98,6 +113,7 @@ const FormPage = () => {
             onChange={handleChange}
           />
         </div>
+        {errors.dob !== "" && <p className={styles.errors}>{errors.dob}</p>}
         <div>
           <label>Description: </label>
           <textarea
@@ -119,7 +135,22 @@ const FormPage = () => {
           </select>
         </div>
         <p>Teams selected: {newDriver.teams.join(", ")}</p>
-        <button type="submit" className={styles.button}>
+        {errors.teams !== "" && <p className={styles.errors}>{errors.teams}</p>}
+        <button
+          type="submit"
+          className={styles.button}
+          disabled={
+            !newDriver.name ||
+            !newDriver.lastName ||
+            !newDriver.nationality ||
+            !newDriver.dob ||
+            errors.name ||
+            errors.lastName ||
+            errors.nationality ||
+            errors.dob ||
+            errors.teams
+          }
+        >
           Create
         </button>
       </form>

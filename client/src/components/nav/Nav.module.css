@@ -1,7 +1,7 @@
-.conteiner {
+.container {
   background-color: rgb(236, 12, 12);
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
 }
 .img {

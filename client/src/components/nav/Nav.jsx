@@ -7,7 +7,7 @@ import logo from "/images/f1Logo.png";
 const Nav = ({ onSearch }) => {
   const location = useLocation();
   return (
-    <nav className={styles.conteiner}>
+    <nav className={styles.container}>
       <img src={logo} alt="f1Logo" className={styles.img} />
       {location.pathname !== "/drivers" ? (
         <Button link={"/drivers"} text={"Home"} />

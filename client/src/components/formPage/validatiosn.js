@@ -5,15 +5,15 @@ const validations = (newDriver) => {
     errors.name = "The name must be between 2 and 12 characters";
 
   if (newDriver.name === "") errors.name = "You must enter a name";
-  if (newDriver.name.test(rejexNameAnLastName))
-    errors.name = "You has entered an invalid name";
+  // if (newDriver.name.test(rejexNameAnLastName))
+  //   errors.name = "You has entered an invalid name";
 
   if (newDriver.lastName.length < 2 || newDriver.lastName.length > 12)
     errors.lastName = "The name must be between 2 and 12 characters";
 
   if (newDriver.lastName === "") errors.lastName = "You must enter a last name";
-  if (newDriver.lastName.test(rejexNameAnLastName))
-    errors.lastName = "You has entered an invalid last name";
+  // if (newDriver.lastName.test(rejexNameAnLastName))
+  //   errors.lastName = "You has entered an invalid last name";
   if (newDriver.nationality === "")
     errors.nationality = "You must enter a nationality";
 

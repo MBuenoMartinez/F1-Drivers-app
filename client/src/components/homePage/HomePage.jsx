@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getAllDrivers,
@@ -6,7 +6,6 @@ import {
   filterDrivers,
   orderDrivers,
 } from "../../redux/actions/actions";
-
 import Card from "../card/Card";
 import styles from "./HomePage.module.css";
 
@@ -15,57 +14,93 @@ const Home = () => {
   const teams = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  const CardsPerPage = 9; //Cantidad de tarjetas por página
-
+  // Estado local para el seguimiento de la página actual
   const [currentPage, setCurrentPage] = useState(1);
+
+  // Número de elementos por página
+  const itemsPerPage = 9;
 
   useEffect(() => {
     dispatch(getAllDrivers());
     dispatch(getAllTeams());
   }, []);
 
-  // Cálculo de las páginas totales
-  const totalPages = Math.ceil(drivers.length / CardsPerPage);
-
-  //Filtrar los conductores a mostrar en la página actual
-  const displayedDrivers = drivers.slice(
-    (currentPage - 1) * CardsPerPage,
-    currentPage * CardsPerPage
-  );
-
-  // Manejar cambios de página
-  const handlePageChange = (newPage) => {
-    if (newPage >= 1 && newPage <= totalPages) {
-      setCurrentPage(newPage);
-    }
-  };
   const handleOrder = (event) => {
     const { value } = event.target;
     dispatch(orderDrivers(value));
   };
+
   const handleFilter = (event) => {
     const { value } = event.target;
     dispatch(filterDrivers(value));
   };
+
+  // Función para cambiar de página
+  const goToPage = (page) => {
+    setCurrentPage(page);
+  };
+
+  // Calcular el número total de páginas
+  const totalPages = Math.ceil(drivers.length / itemsPerPage);
+
+  // Calcular el rango de botones de paginación para mostrar un total de 10 botones
+  let startPage = Math.max(1, currentPage - 4);
+  let endPage = Math.min(totalPages, startPage + 9);
+
+  if (endPage - startPage < 9) {
+    startPage = Math.max(1, endPage - 9);
+  }
+
+  // Generar una lista de botones de paginación
+  const paginationButtons = Array.from(
+    { length: endPage - startPage + 1 },
+    (_, index) => (
+      <button
+        key={startPage + index}
+        onClick={() => goToPage(startPage + index)}
+        className={currentPage === startPage + index ? styles.activePage : ""}
+      >
+        {startPage + index}
+      </button>
+    )
+  );
+
+  // Función para ir a la página anterior
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  // Función para ir a la página siguiente
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
   return (
-    <div className={styles.conteiner}>
+    <div className={styles.container}>
       <div>
-        <label>Order by:</label>
+        <label>Order by: </label>
         <select onChange={handleOrder}>
           <option value="AlfabeticamenteAscendente">
             Alfabeticamente Ascendente
           </option>
+
           <option value="AlfabeticamenteDescendente">
             Alfabeticamente Descendente
           </option>
+
           <option value="YearOfBirthAscendente">
             Year of birth Ascendente
           </option>
+
           <option value="YearOfBirthDescendente">
             Year of birth Descendente
           </option>
         </select>
-        <label>Filter by:</label>
+        <label>Filter by: </label>
         <select onChange={handleFilter}>
           <option value="AllDrivers">All Drivers</option>
           <option value="DriversFromApi">Drivers from Api</option>
@@ -83,34 +118,30 @@ const Home = () => {
         </select>
       </div>
       <div className={styles.cards}>
-        {displayedDrivers.map((driver) => (
-          <Card
-            key={driver.id}
-            id={driver.id}
-            name={driver.name}
-            lastName={driver.lastName}
-            image={driver.image}
-            dob={driver.dob}
-            nationality={driver.nationality}
-            description={driver.description}
-            teams={driver.teams}
-          />
-        ))}
+        {/* Lógica para mostrar los elementos de la página actual */}
+        {drivers
+          .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+          .map((driver) => (
+            <Card
+              key={driver.id}
+              id={driver.id}
+              name={driver.name}
+              lastName={driver.lastName}
+              image={driver.image}
+              dob={driver.dob}
+              nationality={driver.nationality}
+              description={driver.description}
+              teams={driver.teams}
+            />
+          ))}
       </div>
-
-      <div>
-        <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Previus Page
+      <div className={styles.pagination}>
+        <button onClick={goToPreviousPage} disabled={currentPage === 1}>
+          Anterior
         </button>
-        <span>{`Page ${currentPage} of ${totalPages}`}</span>
-        <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          Next Page
+        {paginationButtons}
+        <button onClick={goToNextPage} disabled={currentPage === totalPages}>
+          Siguiente
         </button>
       </div>
     </div>

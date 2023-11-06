@@ -1,14 +1,37 @@
-.conteiner {
+.container {
   background-image: url(/images/homePagebackGround.jpeg);
   background-size: cover;
   background-position: center;
   width: 100%;
-  height: 108vw;
+  height: auto;
 }
 .cards {
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row; /* Cambia de "column" a "row" */
+  flex-direction: row;
   justify-content: center;
-  gap: 50px; /* Espacio entre las tarjetas */
+  gap: 50px;
+}
+.activePage {
+  background-color: rgb(236, 12, 12);
+  color: aliceblue;
+  border: 4px solid aliceblue;
+}
+button:hover {
+  background-color: rgb(236, 12, 12);
+}
+
+select {
+  color: aliceblue;
+  background-color: black;
+  border-radius: 10px;
+  height: 30px;
+  width: auto;
+  margin-top: 20px;
+  border-width: 5px;
+  border-color: aliceblue;
+}
+
+select:hover {
+  background-color: rgb(236, 12, 12);
 }
