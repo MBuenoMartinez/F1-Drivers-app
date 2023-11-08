@@ -1,4 +1,4 @@
-const { Driver, Teams } = require("../db");
+const { Drivers, Teams } = require("../db");
 const axios = require("axios");
 const URL_BASE = "http://localhost:5000/drivers";
 const defaultImage =
@@ -8,7 +8,7 @@ const getDrivers = async (req, res) => {
   try {
     const { name } = req.query;
     const response = await axios.get(URL_BASE);
-    if (!response) res.status(400).send("Faltan datos");
+    if (!response) res.status(400).json({ message: "Missing data" });
     const { data } = response;
 
     const driverApi = data.map((driver) => ({
@@ -22,7 +22,7 @@ const getDrivers = async (req, res) => {
       teams: driver.teams,
     }));
 
-    const driversDb = await Driver.findAll({
+    const driversDb = await Drivers.findAll({
       include: [{ model: Teams, through: { attributes: [] } }],
     });
 
@@ -34,7 +34,7 @@ const getDrivers = async (req, res) => {
       image: driver.image,
       nationality: driver.nationality,
       dob: driver.dob,
-      teams: driver.Teams.map((team) => team.name).join(", "), // Mapear solo los nombres de los equipos
+      teams: driver.Teams.map((team) => team.name).join(", "), 
     }));
 
     const allDrivers = [...driverApi, ...driversWithTeams];
@@ -44,7 +44,9 @@ const getDrivers = async (req, res) => {
         driver.name.toLowerCase().includes(name.toLowerCase())
       );
       if (filterByName.length === 0)
-        res.status(404).send(`No se encontro drivers con este nombre ${name}`);
+        return res
+          .status(404)
+          .json({ message: `Not found drivers with the name ${name}` });
 
       return res.status(200).json(filterByName);
     }

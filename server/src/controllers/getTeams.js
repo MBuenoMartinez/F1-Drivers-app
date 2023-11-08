@@ -5,33 +5,32 @@ const getDrivers = async (req, res) => {
   try {
     const response = await axios.get(URL_BASE);
     if (!response) {
-      return res.status(400).send("Faltan Datos"); // Devuelve una respuesta al cliente
+      return res.status(400).json({ message: "Missing data" });
     }
 
-    // Resto del código para procesar la respuesta
     const { data } = response;
     const uniqueTeams = new Set(
       data
         .map((driver) => driver.teams)
         .join(",")
         .split(/,\s*/)
-        .map((team) => team.trim()) // Elimina espacios al inicio y al final
+        .map((team) => team.trim())
         .filter((team) => team.length > 0)
     );
     const allTeams = Array.from(uniqueTeams);
 
-    for (const teams of allTeams) {
+    for (const team of allTeams) {
       await Teams.findOrCreate({
-        where: { name: teams },
+        where: { name: team },
         defaults: {
-          name: teams,
+          name: team,
         },
       });
     }
 
-    const teams = await Teams.findAll();
+    const teamsDb = await Teams.findAll();
 
-    return res.status(200).json(teams);
+    return res.status(200).json(teamsDb);
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }

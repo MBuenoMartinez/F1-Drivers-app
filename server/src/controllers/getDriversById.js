@@ -1,4 +1,4 @@
-const { Driver, Teams } = require("../db");
+const { Drivers, Teams } = require("../db");
 const axios = require("axios");
 const URL_BASE = "http://localhost:5000/drivers";
 const defaultImage =
@@ -8,7 +8,7 @@ const getDriversById = async (req, res) => {
     const { id } = req.params;
 
     if (isNaN(id)) {
-      const driverDb = await Driver.findByPk(id, { include: Teams });
+      const driverDb = await Drivers.findByPk(id, { include: Teams });
 
       if (driverDb) {
         const driverWithTeams = {
@@ -23,9 +23,7 @@ const getDriversById = async (req, res) => {
         };
         return res.status(200).json(driverWithTeams);
       } else {
-        return res
-          .status(404)
-          .send("No se encontró un driver con el ID especificado");
+        return res.status(404).json({ message: "Driver id not found" });
       }
     }
 
@@ -46,9 +44,7 @@ const getDriversById = async (req, res) => {
       };
       return res.status(200).json(driverApi);
     }
-    return res
-      .status(404)
-      .send("No se encontró un driver con el ID especificado");
+    return res.status(404).json({ message: "Driver id not found" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
