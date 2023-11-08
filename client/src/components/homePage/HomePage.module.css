@@ -3,7 +3,9 @@
   background-size: cover;
   background-position: center;
   width: 100%;
-  height: auto;
+
+  height: 147vw;
+  display: inline-block;
 }
 .cards {
   display: flex;
@@ -34,4 +36,8 @@ select {
 
 select:hover {
   background-color: rgb(236, 12, 12);
+}
+
+label {
+  margin-left: 50px;
 }

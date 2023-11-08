@@ -18,23 +18,25 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   // Número de elementos por página
-  const itemsPerPage = 9;
+  const driversPerPage = 9;
 
   useEffect(() => {
     dispatch(getAllDrivers());
     dispatch(getAllTeams());
   }, []);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [drivers]);
+
   const handleOrder = (event) => {
     const { value } = event.target;
     dispatch(orderDrivers(value));
-    setCurrentPage(1);
   };
 
   const handleFilter = (event) => {
     const { value } = event.target;
     dispatch(filterDrivers(value));
-    setCurrentPage(1);
   };
 
   // Función para cambiar de página
@@ -43,7 +45,7 @@ const Home = () => {
   };
 
   // Calcular el número total de páginas
-  const totalPages = Math.ceil(drivers.length / itemsPerPage);
+  const totalPages = Math.ceil(drivers.length / driversPerPage);
 
   // Calcular el rango de botones de paginación para mostrar un total de 10 botones
   let startPage = Math.max(1, currentPage - 4);
@@ -84,23 +86,17 @@ const Home = () => {
   return (
     <div className={styles.container}>
       <div>
-        <label>Order by: </label>
+        <label>Order alfabetic: </label>
         <select onChange={handleOrder}>
-          <option value="AlfabeticamenteAscendente">
-            Alfabeticamente Ascendente
-          </option>
+          <option value="AlfabeticAscendant">Ascendant</option>
 
-          <option value="AlfabeticamenteDescendente">
-            Alfabeticamente Descendente
-          </option>
+          <option value="AlfabeticDescendant">Descendant</option>
+        </select>
+        <label>Order year of birth: </label>
+        <select onChange={handleOrder}>
+          <option value="YearOfBirthAscendant">Ascendant</option>
 
-          <option value="YearOfBirthAscendente">
-            Year of birth Ascendente
-          </option>
-
-          <option value="YearOfBirthDescendente">
-            Year of birth Descendente
-          </option>
+          <option value="YearOfBirthDescendant">Descendant</option>
         </select>
         <label>Filter by: </label>
         <select onChange={handleFilter}>
@@ -108,7 +104,7 @@ const Home = () => {
           <option value="DriversFromApi">Drivers from Api</option>
           <option value="DriversFromDB">Drivers from DB</option>
         </select>
-        <label>Teams: </label>
+        <label>Filter by teams: </label>
         <select type="checkBoxe" onChange={handleFilter} multiple={false}>
           {teams
             .sort((a, b) => a.name.localeCompare(b.name))
@@ -122,7 +118,10 @@ const Home = () => {
       <div className={styles.cards}>
         {/* Lógica para mostrar los elementos de la página actual */}
         {drivers
-          .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+          .slice(
+            (currentPage - 1) * driversPerPage,
+            currentPage * driversPerPage
+          )
           .map((driver) => (
             <Card
               key={driver.id}
@@ -139,11 +138,11 @@ const Home = () => {
       </div>
       <div className={styles.pagination}>
         <button onClick={goToPreviousPage} disabled={currentPage === 1}>
-          Anterior
+          Previus page
         </button>
         {paginationButtons}
         <button onClick={goToNextPage} disabled={currentPage === totalPages}>
-          Siguiente
+          Next page
         </button>
       </div>
     </div>

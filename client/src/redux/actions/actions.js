@@ -1,9 +1,9 @@
 import {
   GET_ALL_DRIVERS,
+  GET_ALL_TEAMS,
   GET_DRIVERS_BY_NAME,
   GET_DRIVER_DETAIL,
   CLEAR_DRIVER_DETAIL,
-  GET_ALL_TEAMS,
   CREATE_DRIVER,
   DELETE_DRIVER_DB,
   FILTER_DRIVERS,
@@ -26,9 +26,24 @@ export const getAllDrivers = () => {
   };
 };
 
+export const getAllTeams = () => {
+  return async (dispatch) => {
+    try {
+      const endPoint = "http://localhost:3001/teams";
+      const { data } = await axios.get(endPoint);
+      return dispatch({
+        type: GET_ALL_TEAMS,
+        payload: data,
+      });
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+};
+
 export const getDriversByName = (name) => {
-  try {
-    return async (dispatch) => {
+  return async (dispatch) => {
+    try {
       const endPoint = `http://localhost:3001/drivers?name=${name}`;
       const { data } = await axios.get(endPoint);
 
@@ -36,10 +51,11 @@ export const getDriversByName = (name) => {
         type: GET_DRIVERS_BY_NAME,
         payload: data,
       });
-    };
-  } catch (error) {
-    throw Error(error.message);
-  }
+    } catch (error) {
+      alert("Not found drivers with that name");
+      throw Error(error.message);
+    }
+  };
 };
 
 export const getDriverDetail = (id) => {
@@ -63,20 +79,6 @@ export const clearDriverDetaiL = () => {
   };
 };
 
-export const getAllTeams = () => {
-  return async (dispatch) => {
-    try {
-      const endPoint = "http://localhost:3001/teams";
-      const { data } = await axios.get(endPoint);
-      return dispatch({
-        type: GET_ALL_TEAMS,
-        payload: data,
-      });
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  };
-};
 export const createDriver = (newDriver) => {
   return async (dispatch) => {
     try {

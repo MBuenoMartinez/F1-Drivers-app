@@ -20,18 +20,18 @@ const DetailPage = () => {
     <div className={styles.container}>
       <div className={styles.items}>
         <h4>Driver Id: {driverDetail?.id}</h4>
-        <h4>Forename: {driverDetail?.name}</h4>
-        <h4>Surname: {driverDetail?.lastName}</h4>
+        <h4>Name: {driverDetail?.name}</h4>
+        <h4>Last name: {driverDetail?.lastName}</h4>
         <img
           src={driverDetail?.image}
           alt={driverDetail?.lastName}
           className={styles.img}
         />
         <h4>Nationality: {driverDetail?.nationality}</h4>
-        <h4>Day of birth: {driverDetail?.dob}</h4>
+        <h4>Date of birth: {driverDetail?.dob}</h4>
         <h4>Teams: {driverDetail?.teams}</h4>
 
-        <h4 className={styles.p}>{driverDetail?.description}</h4>
+        <h4 className={styles.h4}>{driverDetail?.description}</h4>
       </div>
     </div>
   );
