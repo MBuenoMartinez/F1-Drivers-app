@@ -27,7 +27,6 @@ const postDrivers = async (req, res) => {
       });
 
       const teamsArray = teams.map((team) => team.trim());
-      console.log(teamsArray);
 
       const team = await Teams.findAll({
         where: {
