@@ -67,15 +67,26 @@ const reducer = (state = initialState, action) => {
       let backUpToOrder = [...state.drivers];
       let driversOrdered;
 
-      if (action.payload === "AlfabeticAscendant")
-        driversOrdered = backUpToOrder.sort((a, b) =>
-          a.name.localeCompare(b.name)
-        );
+      if (action.payload === "AlfabeticAscendant") {
+        driversOrdered = backUpToOrder.sort((a, b) => {
+          const compareName = a.name.localeCompare(b.name);
+          if (compareName === 0) {
+            return a.lastName.localeCompare(b.lastName);
+          }
+          return compareName;
+        });
+      }
 
-      if (action.payload === "AlfabeticDescendant")
-        driversOrdered = backUpToOrder.sort((a, b) =>
-          b.name.localeCompare(a.name)
-        );
+      if (action.payload === "AlfabeticDescendant") {
+        driversOrdered = backUpToOrder.sort((a, b) => {
+          const compareName = b.name.localeCompare(a.name);
+          if (compareName === 0) {
+            return b.lastName.localeCompare(a.lastName);
+          }
+          return compareName;
+        });
+      }
+
       if (action.payload === "YearOfBirthAscendant")
         driversOrdered = backUpToOrder.sort((a, b) => {
           const yearA = parseInt(a.dob.split("-")[0]);

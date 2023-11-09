@@ -13,6 +13,7 @@ import FormPage from "./components/formPage/FormPage";
 import { getAllDrivers, getDriversByName } from "./redux/actions/actions";
 
 function App() {
+  document.title = "F1";
   const dispatch = useDispatch();
   const location = useLocation();
   const onSearch = (name) => {
@@ -27,10 +28,10 @@ function App() {
 
   return (
     <div>
-      {location.pathname !== "/" ? <Nav onSearch={onSearch} /> : ""}
+      {location.pathname !== "/landingPage" ? <Nav onSearch={onSearch} /> : ""}
 
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/landingPage" element={<LandingPage />} />
         <Route path="/drivers" element={<HomePage />} />
         <Route path="/drivers/:id" element={<DetailPage />} />
         <Route path="/createDriver" element={<FormPage />} />

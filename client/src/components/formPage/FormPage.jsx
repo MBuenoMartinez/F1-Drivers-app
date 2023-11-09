@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { getAllTeams } from "../../redux/actions/actions";
 import { createDriver } from "../../redux/actions/actions";
 import validations from "./validatiosn";
@@ -8,7 +7,6 @@ import styles from "./FormPage.module.css";
 const FormPage = () => {
   const dispatch = useDispatch();
   const teams = useSelector((state) => state.teams);
-  const navigate = useNavigate();
   const [newDriver, setNewDriver] = useState({
     name: "",
     lastName: "",
@@ -48,8 +46,15 @@ const FormPage = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(createDriver(newDriver));
-    alert("Your driver has been created");
-    navigate("/drivers");
+    setNewDriver({
+      name: "",
+      lastName: "",
+      nationality: "",
+      image: "",
+      dob: "",
+      description: "",
+      teams: [],
+    });
   };
 
   useEffect(() => {

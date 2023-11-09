@@ -14,10 +14,8 @@ const Home = () => {
   const teams = useSelector((state) => state.teams);
   const dispatch = useDispatch();
 
-  // Estado local para el seguimiento de la página actual
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Número de elementos por página
   const driversPerPage = 9;
 
   useEffect(() => {
@@ -39,50 +37,19 @@ const Home = () => {
     dispatch(filterDrivers(value));
   };
 
-  // Función para cambiar de página
-  const goToPage = (page) => {
-    setCurrentPage(page);
-  };
-
-  // Calcular el número total de páginas
   const totalPages = Math.ceil(drivers.length / driversPerPage);
 
-  // Calcular el rango de botones de paginación para mostrar un total de 10 botones
-  let startPage = Math.max(1, currentPage - 4);
-  let endPage = Math.min(totalPages, startPage + 9);
-
-  if (endPage - startPage < 9) {
-    startPage = Math.max(1, endPage - 9);
-  }
-
-  // Generar una lista de botones de paginación
-  const paginationButtons = Array.from(
-    { length: endPage - startPage + 1 },
-    (_, index) => (
-      <button
-        key={startPage + index}
-        onClick={() => goToPage(startPage + index)}
-        className={currentPage === startPage + index ? styles.activePage : ""}
-      >
-        {startPage + index}
-      </button>
-    )
-  );
-
-  // Función para ir a la página anterior
   const goToPreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
   };
 
-  // Función para ir a la página siguiente
   const goToNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
   };
-
   return (
     <div className={styles.container}>
       <div>
@@ -116,7 +83,6 @@ const Home = () => {
         </select>
       </div>
       <div className={styles.cards}>
-        {/* Lógica para mostrar los elementos de la página actual */}
         {drivers
           .slice(
             (currentPage - 1) * driversPerPage,
@@ -138,11 +104,13 @@ const Home = () => {
       </div>
       <div className={styles.pagination}>
         <button onClick={goToPreviousPage} disabled={currentPage === 1}>
-          Previus page
+          Previous Page
         </button>
-        {paginationButtons}
+        <span>
+          {currentPage} of {totalPages}
+        </span>
         <button onClick={goToNextPage} disabled={currentPage === totalPages}>
-          Next page
+          Next Page
         </button>
       </div>
     </div>

@@ -4,8 +4,6 @@ import {
   GET_DRIVERS_BY_NAME,
   GET_DRIVER_DETAIL,
   CLEAR_DRIVER_DETAIL,
-  CREATE_DRIVER,
-  DELETE_DRIVER_DB,
   FILTER_DRIVERS,
   ORDER_DRIVERS,
 } from "./type-actions";
@@ -45,14 +43,16 @@ export const getDriversByName = (name) => {
   return async (dispatch) => {
     try {
       const endPoint = `http://localhost:3001/drivers?name=${name}`;
-      const { data } = await axios.get(endPoint);
+      const response = await axios.get(endPoint);
 
       return dispatch({
         type: GET_DRIVERS_BY_NAME,
-        payload: data,
+        payload: response.data,
       });
     } catch (error) {
-      alert("Not found drivers with that name");
+      if (error.response.status === 404) {
+        return alert("Not found drivers with that name");
+      }
       throw Error(error.message);
     }
   };
@@ -80,33 +80,24 @@ export const clearDriverDetaiL = () => {
 };
 
 export const createDriver = (newDriver) => {
-  return async (dispatch) => {
+  return async () => {
     try {
       const endPoint = "http://localhost:3001/createDriver";
-      const { data } = await axios.post(endPoint, newDriver);
-      return dispatch({
-        type: CREATE_DRIVER,
-        payload: data,
-      });
+      const response = await axios.post(endPoint, newDriver);
+      if (response.status === 200) {
+        return alert("Your driver has been created");
+      }
     } catch (error) {
+      if (error.response.status === 400) {
+        return alert(
+          "The driver is not created because the name is already taken"
+        );
+      }
       throw new Error(error.message);
     }
   };
 };
-export const deleteDriver = (id) => {
-  return async (dispatch) => {
-    try {
-      const endPoint = `http://localhost:3001/drivers/${id}`;
-      const { data } = await axios.delete(endPoint);
-      return dispatch({
-        type: DELETE_DRIVER_DB,
-        payload: data,
-      });
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  };
-};
+
 export const filterDrivers = (value) => {
   try {
     return {
