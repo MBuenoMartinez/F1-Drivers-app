@@ -13,7 +13,6 @@ import FormPage from "./components/formPage/FormPage";
 import { getAllDrivers, getDriversByName } from "./redux/actions/actions";
 
 function App() {
-  document.title = "F1";
   const dispatch = useDispatch();
   const location = useLocation();
   const onSearch = (name) => {
