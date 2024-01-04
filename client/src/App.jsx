@@ -28,10 +28,10 @@ function App() {
 
   return (
     <div>
-      {location.pathname !== "/landingPage" ? <Nav onSearch={onSearch} /> : ""}
+      {location.pathname !== "/" ? <Nav onSearch={onSearch} /> : ""}
 
       <Routes>
-        <Route path="/landingPage" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/drivers" element={<HomePage />} />
         <Route path="/drivers/:id" element={<DetailPage />} />
         <Route path="/createDriver" element={<FormPage />} />

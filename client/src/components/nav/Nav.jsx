@@ -20,7 +20,7 @@ const Nav = ({ onSearch }) => {
           <Button link="/createDriver" text="Create Driver" />
         </>
       )}
-      <Button link="/landingPage" text="Exit" />
+      <Button link="/" text="Exit" />
     </nav>
   );
 };
