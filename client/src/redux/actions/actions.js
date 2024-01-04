@@ -8,12 +8,11 @@ import {
   ORDER_DRIVERS,
 } from "./type-actions";
 import axios from "axios";
-const BackUrl = import.meta.env.VITE_REACT_APP_BACK;
 
 export const getAllDrivers = () => {
   return async (dispatch) => {
     try {
-      const endPoint = `${BackUrl}/drivers`;
+      const endPoint = `/drivers`;
       const { data } = await axios.get(endPoint);
       return dispatch({
         type: GET_ALL_DRIVERS,
@@ -28,7 +27,7 @@ export const getAllDrivers = () => {
 export const getAllTeams = () => {
   return async (dispatch) => {
     try {
-      const endPoint = `${BackUrl}/teams`;
+      const endPoint = `/teams`;
       const { data } = await axios.get(endPoint);
       return dispatch({
         type: GET_ALL_TEAMS,
@@ -43,7 +42,7 @@ export const getAllTeams = () => {
 export const getDriversByName = (name) => {
   return async (dispatch) => {
     try {
-      const endPoint = `${BackUrl}/drivers?name=${name}`;
+      const endPoint = `/drivers?name=${name}`;
       const response = await axios.get(endPoint);
 
       return dispatch({
@@ -62,7 +61,7 @@ export const getDriversByName = (name) => {
 export const getDriverDetail = (id) => {
   return async (dispatch) => {
     try {
-      const endPoint = `${BackUrl}/drivers/${id}`;
+      const endPoint = `/drivers/${id}`;
       const { data } = await axios.get(endPoint);
       return dispatch({
         type: GET_DRIVER_DETAIL,
@@ -83,7 +82,7 @@ export const clearDriverDetaiL = () => {
 export const createDriver = (newDriver) => {
   return async () => {
     try {
-      const endPoint = `${BackUrl}/createDriver`;
+      const endPoint = `/createDriver`;
       const response = await axios.post(endPoint, newDriver);
       if (response.status === 200) {
         return alert("Your driver has been created");
